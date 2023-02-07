@@ -1,36 +1,47 @@
 import React, { useState } from "react";
 
 function App() {
-
-  const [headingText, setHeadingText] = useState("Hello");
+  const [headingText, setHeading] = useState(" ");
   const [isMousedOver, setMouseOver] = useState(false);
+  const [name, setName] = useState("");
 
 
+  function handleClick(event) {
+    setHeading(name);
 
-  function handleClick() {
-    setHeadingText("Submitted")
-
+    event.preventDefault();
   }
-
 
 
 function handleMouseOver() {
   setMouseOver(true)
 }
 
+
 function handleMouseOut() {
   setMouseOver(false)
+}
+
+
+function handleChange(event) {
+  console.log(event.target.value);
+  setName(event.target.value);
 }
 
 
 
   return (
     <div className="container">
-      <h1>{headingText}</h1>
-      <input type="text" placeholder="What's your name?" />
-      <button style={{backgroundColor: isMousedOver ? "black" : "white"}} onClick={handleClick}
-      onMouseOver={handleMouseOver}
-      onMouseOut={handleMouseOut}>Submit</button>
+      <h1>Hello{headingText}</h1>
+      <form onSubmit={handleClick}>
+        <input type="text" onChange={handleChange} placeholder="What's your name?" value={name} />
+        <button 
+          style={{backgroundColor: isMousedOver ? "black" : "white"}} 
+          onMouseOver={handleMouseOver}
+          onMouseOut={handleMouseOut}
+          type="submit">Submit
+        </button>
+      </form>
     </div>
   );
 }
