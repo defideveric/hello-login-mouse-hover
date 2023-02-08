@@ -1,16 +1,8 @@
 import React, { useState } from "react";
 
 function App() {
-  const [headingText, setHeading] = useState(" ");
   const [isMousedOver, setMouseOver] = useState(false);
-  const [name, setName] = useState("");
-
-
-  function handleClick(event) {
-    setHeading(name);
-
-    event.preventDefault();
-  }
+  const [contact, setContact] = useState({fName: "", lName: "", email: ""});
 
 
 function handleMouseOver() {
@@ -24,17 +16,27 @@ function handleMouseOut() {
 
 
 function handleChange(event) {
-  console.log(event.target.value);
-  setName(event.target.value);
-}
+  const {name, value} = event.target;
 
+  setContact(prevValue => {
+    return {
+      ...prevValue,
+    [name] : value
+    }
+  })
+
+
+}
 
 
   return (
     <div className="container">
-      <h1>Hello{headingText}</h1>
-      <form onSubmit={handleClick}>
-        <input type="text" onChange={handleChange} placeholder="What's your name?" value={name} />
+      <h1>Hello{contact.fName} {contact.lName}</h1>
+      <p>{contact.email}</p>
+      <form>
+        <input name="fName" onChange={handleChange}  placeholder="First Name" value={contact.fName} />
+        <input  name="lName" onChange={handleChange} placeholder="Last Name" value={contact.lName} />
+        <input name="email" onChange={handleChange} placeholder="Email" value={contact.email} />
         <button 
           style={{backgroundColor: isMousedOver ? "black" : "white"}} 
           onMouseOver={handleMouseOver}
